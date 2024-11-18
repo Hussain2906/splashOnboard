@@ -1,5 +1,5 @@
 
-# YoungIndya Project Documentation
+# Project Documentation
 
 ## Project Overview
 The YoungIndya project is a React Native application focused on providing onboarding functionality with dynamic image rendering, navigation, and user interaction. The app is designed to present an onboarding experience for users, displaying images, titles, descriptions, and navigation functionality to guide users to the Login screen.
@@ -13,50 +13,7 @@ The Onboarding screen is a horizontally scrollable list of onboarding items that
 - Each item consists of an image, title, and description.
 - `pagingEnabled` and `snapToAlignment` are used to make the scrolling feel smooth, with one item showing at a time.
 
-**Code:**
-```javascript
-import React from 'react';
-import { FlatList, View, StyleSheet, Dimensions } from 'react-native';
-import OnBoardingItem from './OnBoardingItem';
 
-const { width } = Dimensions.get('window');
-
-const OnBoarding = ({ navigation }) => {
-  const data = [
-    { image: 'page1', title: 'Fresh Vegetables', desc: 'Get farm-fresh vegetables delivered right to your doorstep.' },
-    { image: 'page2', title: 'Daily Essentials', desc: 'Order daily essentials like milk, eggs, and bread.' },
-    { image: 'page3', title: 'Gourmet & Snacks', desc: 'Explore our range of gourmet items and snacks.' },
-  ];
-
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.image}
-        renderItem={({ item }) => <OnBoardingItem item={item} navigation={navigation} />}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        pagingEnabled
-        snapToAlignment="center"
-        decelerationRate="fast"
-        contentContainerStyle={styles.contentContainer}
-      />
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  contentContainer: {
-    alignItems: 'center',
-  },
-});
-
-export default OnBoarding;
-```
 
 ### 2. **Onboarding Item (OnBoardingItem.js)**
 Each onboarding item displays an image, title, description, and a button to navigate to the login screen.
@@ -64,80 +21,6 @@ Each onboarding item displays an image, title, description, and a button to navi
 - The `TouchableOpacity` component is used to handle navigation when the "Go Ahead" button is pressed.
 - The `useNavigation` hook from `@react-navigation/native` is used to access navigation without passing it as a prop.
 
-**Code:**
-```javascript
-import React from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
-const { width } = Dimensions.get('window');
-
-const OnBoardingItem = ({ item }) => {
-  const navigation = useNavigation();
-
-  const resolveImage = (imageName) => {
-    switch (imageName) {
-      case 'page1': return require('../assets/OnBoard/page1.png');
-      case 'page2': return require('../assets/OnBoard/page2.png');
-      case 'page3': return require('../assets/OnBoard/page3.png');
-      default: return null;
-    }
-  };
-
-  return (
-    <View style={styles.container}>
-      <Image source={resolveImage(item.image)} style={styles.image} resizeMode="contain" />
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.description}>{item.desc}</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.button}>
-        <Text style={styles.buttonText}>Go Ahead</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width,
-    paddingHorizontal: 20,
-    paddingBottom: 40,
-  },
-  image: {
-    width: '100%',
-    height: 250,
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  description: {
-    fontSize: 16,
-    color: '#555',
-    textAlign: 'center',
-    lineHeight: 24,
-    marginHorizontal: 20,
-  },
-  button: {
-    width: '30%',
-    height: 80,
-    borderRadius: 100,
-    backgroundColor: '#2D304E',
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
-    marginTop: 26,
-  },
-});
-
-export default OnBoardingItem;
-```
 
 ### 3. **Adding Dependencies**
 The following dependencies were used to implement the above functionality:
